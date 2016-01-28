@@ -58,6 +58,9 @@
     <button type="button" id="btDelete" name="btDelete">Delete</button>
 </form>
 </div>
-
+<script src="../js/jquery-1.12.0.js"></script>
+<script>
+    //Ajax
+</script>
 </body>
 </html>
