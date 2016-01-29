@@ -132,6 +132,22 @@ $app->post('/api/wine',  function() use ($app, $db){
     //print_r($_POST);
 })->name('ajoutWines');
 
+//Page de formulaire de suppression
+
+$app->get('/formDelete',  function() use ($app){
+    $app->render('delete.php', compact('app'));
+    
+})->name('formDeSuppressionDeVin');
+
+//Supprimer un vin avec l'id
+
+$app->delete('/api/wine/:id', function ($id) use ($app, $db){
+    $sql = "DELETE FROM wine WHERE id = $id";
+    $db->exec($sql);
+    echo "Record deleted successfully";
+    
+})->name('deleteWinesById')->conditions(['id' => '[0-9]+']);
+
 //Rendu
 
 $app->run();
