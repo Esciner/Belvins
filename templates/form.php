@@ -54,9 +54,9 @@
 
     $(document).ready(function() {
         //Ajax
-        $.ajax("./listing.php",{// Lancement d'Ajax en reliant la source du fichier des données
+        $.ajax("./listing.php",{// Lancement d'Ajax en reliant la source du fichier des données TODO: changer URL
             success: function(response){
-                $("#listeVin").html(response).show();
+                console.log(response); // Récupération de toute la BD
             }
         });
     });
