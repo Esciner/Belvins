@@ -220,10 +220,12 @@
         //JQUERYUI: Autocomplete
         var autocompleteVins = [];
         for (var i in json)
-            autocompleteVins += json[i].name;
+            autocompleteVins.push(json[i].name);
+
+        console.log(autocompleteVins);
 
         $(function () {
-            autocompleteVins
+            autocompleteVins;
         });
         $("#searchVin").autocomplete({source: autocompleteVins});
         //Empêcher les envois des formulaires
