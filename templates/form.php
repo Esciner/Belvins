@@ -18,13 +18,22 @@
         ul {
             list-style-type: none;
         }
-
         li {
             margin: 5px 0;
         }
+
+        body {
+            font-family: sans-serif;
+        }
+
+        .highlight {
+            background-color: #800020;
+            color: white;
+        }
     </style>
     <script>
-        var json = [{
+        var json;
+        json = [{
             "id": "1",
             "name": "CHATEAU DE SAINT COSME",
             "year": "2009",
@@ -145,9 +154,10 @@
     </ul>
 </div>
 <div>
-    <!--<form action="<?= $app->urlFor('ajoutWines');  ?>" id="formVin" method="post">--> <!--TODO url PUT-->
-        <form action="#" id="formVin"> <!--En attendant URL post fait -->
+    <form action="<?= $app->urlFor('ajoutWines'); ?>" id="formVin" method="post">
         <input type="reset" id="btReset" name="btReset" value="New">
+        <label for="idVin">Id:</label>
+        <input type="text" id="idVin" name="name" maxlength="50" readonly/>
         <label for="nameVin">Name:</label>
         <input type="text" id="nameVin" name="name" maxlength="50"/>
         <label for="grapesVin">Grapes:</label>
@@ -158,6 +168,7 @@
         <input type="text" id="regionVin" name="region" maxlength="50"/>
         <label for="yearVin">Year:</label>
         <input type="number" id="yearVin" name="year" min="1900" max="2100"/>
+        <img src="#" alt=#" id="imgVin"/>
         <label for="description">Description :</label>
         <textarea id="description" name="description" rows="10" cols="25" maxlength="500"></textarea>
         <button type="submit" id="btSubmit" name="btSubmit">Save</button>
@@ -180,6 +191,31 @@
         for (var i in json) {
             $("#listeVin").append("<li>" + json[i].name + "</li>");
         }
+        $("li").on('mouseover', function () {
+            $(this).addClass('highlight');
+        });
+        $("li").on('mouseout', function () {
+            $(this).removeClass('highlight');
+        });
+        $("li").on('click', function () {
+            //$(this).addClass('highlight');
+            var id = $(this).attr("id");
+            //console.log(id);
+            var traversing = $(this).closest("body");
+            traversing.find('#idVin').val(id);
+            traversing.find('#nameVin').val(json[id].name);
+            traversing.find('#grapesVin').val(json[id].grapes);
+            traversing.find('#countryVin').val(json[id].country);
+            traversing.find('#regionVin').val(json[id].region);
+            traversing.find('#yearVin').val(json[id].year);
+            traversing.find('#description').val(json[id].description);
+            traversing.find('#imgVin').attr("src", json[id].picture);
+            traversing.find('#imgVin').attr("alt", json[id].name);
+        });
+        //Empêcher les envois des formulaires
+        $("form").on("submit", function (event) {
+            event.preventDefault();
+        })
     });
 </script>
 </body>
