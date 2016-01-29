@@ -30,6 +30,10 @@
             background-color: #800020;
             color: white;
         }
+
+        #imgVin {
+            visibility: hidden;
+        }
     </style>
     <script>
         var json;
@@ -211,7 +215,17 @@
             traversing.find('#description').val(json[id].description);
             traversing.find('#imgVin').attr("src", json[id].picture);
             traversing.find('#imgVin').attr("alt", json[id].name);
+            traversing.find('#imgVin').css("visibility", "visible");
         });
+        //JQUERYUI: Autocomplete
+        var autocompleteVins = [];
+        for (var i in json)
+            autocompleteVins += json[i].name;
+
+        $(function () {
+            autocompleteVins
+        });
+        $("#searchVin").autocomplete({source: autocompleteVins});
         //Empêcher les envois des formulaires
         $("form").on("submit", function (event) {
             event.preventDefault();
