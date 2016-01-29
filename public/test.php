@@ -102,10 +102,11 @@ $app->post('/api/wine',  function() use ($app, $db){
     }else{
         $region = '';
     }
-    if(!empty($_POST['description'])){
-        $description = $_POST['description'];
+    if(isset($_FILES['description'])){
+        //echo $_FILES['description'];
+        $description = fopen($_FILES['description']['tmp_name'], 'rb');
     }else{
-        $description = '';
+        $description = $_FILES['description']['tmp_name'];
     }
     if(!empty($_POST['picture'])){
         $picture = $_POST['picture'];
@@ -113,9 +114,19 @@ $app->post('/api/wine',  function() use ($app, $db){
         $picture = '';
     }
     
-    $sql = "INSERT INTO wine (name, year, grapes, country, region, description, picture) VALUES ($name, $year, $grapes, $country, $region, $description, $picture)";
-    $db->exec($sql);
-    echo 'Ajout reussi';
+    $stmt = $db->prepare("INSERT INTO wine (name, year, grapes, country, region, description, picture) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bindParam(1, $name);
+    $stmt->bindParam(2, $year);
+    $stmt->bindParam(3, $grapes);
+    $stmt->bindParam(4, $country);
+    $stmt->bindParam(5, $region);
+    $stmt->bindParam(6, $description, PDO::PARAM_LOB);
+    $stmt->bindParam(7, $picture);
+    $stmt->execute();
+    //echo 'Ajout reussi';
+    echo $description .'<br/>';
+    print_r($_FILES);
+    print_r($_POST);
 })->name('ajoutWines');
 
 //Rendu

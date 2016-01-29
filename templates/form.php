@@ -40,7 +40,7 @@
     </ul>
 </div>
 <div>
-    <form action="<?= $app->urlFor('ajoutWines');  ?>" id="formVin" method="post">
+    <form action="<?= $app->urlFor('ajoutWines');  ?>" id="formVin" method="post" enctype="multipart/form-data">
     <input type="reset" id="btReset" name="btReset" value="New">
     <label for="nameVin">Name:</label>
     <input type="text" id="nameVin" name="name" maxlength="50"/>
@@ -53,7 +53,7 @@
     <label for="yearVin">Year:</label>
     <input type="number" id="yearVin" name="year" min="1900" max="2100"/>
     <label for="description">Description :</label>
-    <textarea id="description" name="description" rows="10" cols="25" maxlength="500"></textarea>
+    <input id="description" name="description" type="file">
     <button type="submit" id="btSubmit" name="btSubmit">Save</button>
     <button type="button" id="btDelete" name="btDelete">Delete</button>
 </form>
