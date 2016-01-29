@@ -108,8 +108,10 @@ $app->post('/api/wine',  function() use ($app, $db){
     }else{
         $description = $_FILES['description']['tmp_name'];
     }
-    if(!empty($_POST['picture'])){
-        $picture = $_POST['picture'];
+    if(!empty($_FILES['picture'])){
+        $resultat = move_uploaded_file($_FILES['picture']['tmp_name'],'../pictures/' . $_FILES['picture']['name']);
+        if ($resultat) echo "Transfert réussi";
+        $picture = $_FILES['picture']['name'];
     }else{
         $picture = '';
     }
@@ -124,9 +126,10 @@ $app->post('/api/wine',  function() use ($app, $db){
     $stmt->bindParam(7, $picture);
     $stmt->execute();
     //echo 'Ajout reussi';
-    echo $description .'<br/>';
-    print_r($_FILES);
-    print_r($_POST);
+    //echo $description .'<br/>';
+    //echo $picture .'<br/>';
+    //print_r($_FILES);
+    //print_r($_POST);
 })->name('ajoutWines');
 
 //Rendu

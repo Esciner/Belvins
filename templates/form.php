@@ -54,6 +54,8 @@
     <input type="number" id="yearVin" name="year" min="1900" max="2100"/>
     <label for="description">Description :</label>
     <input id="description" name="description" type="file">
+    <label for="picture">Picture :</label>
+    <input id="picture" name="picture" type="file">
     <button type="submit" id="btSubmit" name="btSubmit">Save</button>
     <button type="button" id="btDelete" name="btDelete">Delete</button>
 </form>
