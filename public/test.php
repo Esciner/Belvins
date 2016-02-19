@@ -4,6 +4,8 @@
 require '../vendor/autoload.php';
 
 \Slim\Slim::registerAutoloader();
+require '../vendor/twig/Twig/lib/Twig/Autoloader.php';
+Twig_Autoloader::register();
 
 
 //Acces DB
@@ -12,18 +14,28 @@ $pass = 'root';
 $dbname = 'BelVins';
 $db = new PDO('mysql:host=localhost;dbname=' . $dbname, $user, $pass);
 
-
+/*
 $app = new Slim\Slim([
         'templates.path' => '../templates'
         ]);
+*/
 
+//Twig
+// Create app
+$app = new \Slim\Slim([
+        'view' => new \Slim\Views\Twig(),
+        'templates.path' => '../templates'
+        ]);
+
+$app->get('/', function () use ($app) {
+    $pageTitle = 'hello world';
+    $body = 'sup world';
+
+    $app->view()->setData(array('title' => $pageTitle, 'body' => $body));
+    $app->render('index.html');
+});
 
 //Routing
-
-$app->get('/',  function(){
-    echo 'Bonjour';
-    
-});
 
 $app->get('/contact/:name',  function($name) use ($app){
     $app->render('contact.php', compact('name'));
@@ -44,9 +56,11 @@ $app->get('/api/wine',  function() use ($app, $db){
     $donneeJSON = array();
     foreach($db->query($sql) as $row)
     {   
-        $donneeJSON[] = json_encode($row);
+        //$donneeJSON[] = json_encode($row);
+        $donneeJSON[] = $row;
     }
-    $app->render('listing.php', compact('donneeJSON'));
+    //$app->render('listing.php', compact('donneeJSON'));
+    $app->render('listing.html', compact('donneeJSON'));
 })->name('getWines');
 
 //Chercher vin par id
