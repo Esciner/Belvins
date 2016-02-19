@@ -15,7 +15,7 @@ and open the template in the editor.
     {% for donnee in donneeJSON %}
     <li>
         <p>{{ donnee.name }}</p>
-        <p>Mis en bouteille le {{ donnee.year }} à {{ donnee.country }} en {{ donnee.region }}</p>
+        <p>Mis en bouteille le {{ donnee.year }} à {{ donnee.region }} en {{ donnee.country }}</p>
         <p>{{ donnee.description }}</p>
         <p><img src="../../pictures/{{ donnee.picture }}"/></p>
     </li>
