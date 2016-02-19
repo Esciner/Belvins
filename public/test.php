@@ -12,13 +12,15 @@ Twig_Autoloader::register();
 $user = 'root';
 $pass = 'root';
 $dbname = 'BelVins';
-$db = new PDO('mysql:host=localhost;dbname=' . $dbname, $user, $pass);
+//$db = new PDO('mysql:host=localhost;dbname=' . $dbname, $user, $pass);
 
-/*
-$app = new Slim\Slim([
-        'templates.path' => '../templates'
-        ]);
-*/
+//REDBEAN
+
+define('LIB_PATH',__DIR__.'../../RedBean/');
+
+require LIB_PATH.'rb.php';
+
+R::setup('mysql:host=localhost;dbname=' . $dbname, $user, $pass);
 
 //Twig
 // Create app
@@ -52,27 +54,27 @@ $app->get('/form',  function() use ($app){
 //Chercher tout les vins
 
 $app->get('/api/wine',  function() use ($app, $db){
-    $sql = "SELECT * FROM wine";
-    $donneeJSON = array();
-    foreach($db->query($sql) as $row)
-    {   
-        //$donneeJSON[] = json_encode($row);
-        $donneeJSON[] = $row;
-    }
-    //$app->render('listing.php', compact('donneeJSON'));
+    $donneeJSON = R::findAll('wine');
+    R::close();
+    
     $app->render('listing.html', compact('donneeJSON'));
 })->name('getWines');
 
 //Chercher vin par id
 
 $app->get('/api/wine/:id',  function($id) use ($app, $db){
+    /*
     $sql = "SELECT * FROM wine WHERE id = $id";
     $donneeJSON = array();
     foreach($db->query($sql) as $row)
     {   
         $donneeJSON[] = json_encode($row);
     }
-    $app->render('listing.php', compact('donneeJSON'));
+     * 
+     */
+    $donnee = R::load('wine', $id);
+
+    $app->render('example.html', compact('donnee'));
 })->name('getWinesById')->conditions(['id' => '[0-9]+']);
 
 //Chercher vin par nom
