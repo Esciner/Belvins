@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Listing</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <ul>
+    {% for donnee in donneeJSON %}
+    <li>
+        <p>{{ donnee.name }}</p>
+        <p>Mis en bouteille le {{ donnee.year }} à {{ donnee.region }} en {{ donnee.country }}</p>
+        <p>{{ donnee.description }}</p>
+        <p><img src="../../pictures/{{ donnee.picture }}"/></p>
+    </li>
+    {% endfor %}
+</ul>
+    </body>
+</html>
